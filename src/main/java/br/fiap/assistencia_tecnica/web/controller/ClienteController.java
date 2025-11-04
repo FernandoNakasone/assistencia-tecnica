@@ -1,8 +1,10 @@
 package br.fiap.assistencia_tecnica.web.controller;
 
 import br.fiap.assistencia_tecnica.domain.Cliente;
+import br.fiap.assistencia_tecnica.domain.Equipamento;
 import br.fiap.assistencia_tecnica.service.ClienteService;
 import br.fiap.assistencia_tecnica.web.dto.ClienteRequest;
+import br.fiap.assistencia_tecnica.web.dto.EquipamentoDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,5 +42,10 @@ public class ClienteController {
     @GetMapping("/{id}")
     public Cliente buscaPorId(@PathVariable Long id) {
         return service.buscaPorId(id);
+    }
+
+    @GetMapping("/{idCliente}/equipamento")
+    public List<Equipamento> listarEquipamentos(@PathVariable Long idCliente){
+        return service.listarEquipamentos(idCliente);
     }
 }
