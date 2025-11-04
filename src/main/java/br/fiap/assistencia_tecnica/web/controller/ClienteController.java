@@ -24,14 +24,7 @@ public class ClienteController {
     @ResponseStatus(HttpStatus.CREATED)
     public Cliente criar(@RequestBody ClienteRequest requesicao){
 
-        Cliente cliente = new Cliente();
-        cliente.setId(requesicao.getId());
-        cliente.setNome(requesicao.getNome());
-        cliente.setEmail(requesicao.getEmail());
-        cliente.setTelefone(requesicao.getTelefone());
-        cliente.setSenha(requesicao.getSenha());
-
-        return service.salvar(cliente);
+        return service.salvar(requesicao);
     }
 
     @GetMapping

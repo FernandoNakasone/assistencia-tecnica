@@ -1,9 +1,11 @@
 package br.fiap.assistencia_tecnica.service;
 
+import br.fiap.assistencia_tecnica.config.SenhaConfig;
 import br.fiap.assistencia_tecnica.domain.Cliente;
 import br.fiap.assistencia_tecnica.domain.Equipamento;
 import br.fiap.assistencia_tecnica.repository.ClienteRepository;
 import br.fiap.assistencia_tecnica.repository.EquipamentoRepository;
+import br.fiap.assistencia_tecnica.web.dto.ClienteRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,13 +14,25 @@ import java.util.List;
 public class ClienteService {
     private ClienteRepository repository;
     private EquipamentoRepository equipamentoRepository;
+    private SenhaConfig encoder;
 
-    public ClienteService(ClienteRepository repository, EquipamentoRepository equipamentoRepository) {
+    public ClienteService(ClienteRepository repository,
+                          EquipamentoRepository equipamentoRepository,
+                          SenhaConfig encoder) {
         this.repository = repository;
         this.equipamentoRepository = equipamentoRepository;
+        this.encoder = encoder;
     }
 
-    public Cliente salvar(Cliente cliente) {
+    public Cliente salvar(ClienteRequest requesicao) {
+        Cliente cliente = new Cliente();
+
+        cliente.setId(requesicao.getId());
+        cliente.setNome(requesicao.getNome());
+        cliente.setEmail(requesicao.getEmail());
+        cliente.setTelefone(requesicao.getTelefone());
+        cliente.setSenha(encoder.hashear().encode(requesicao.getSenha()));
+
         return repository.save(cliente);
     }
 
